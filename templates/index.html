@@ -1,0 +1,60 @@
+<head>
+	
+
+	<script type="text/javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+
+	<script async>
+		(function(w, d) { 
+			w.CollectId = "5ea1a27782d74543a6557b0e"; 
+			var h = d.head || d.getElementsByTagName("head")[0]; 
+			var s = d.createElement("script"); 
+			s.setAttribute("type", "text/javascript"); 
+			s.setAttribute("src", "https://collectcdn.com/launcher.js"); 
+			h.appendChild(s);
+			})(window, document);
+	</script>
+
+    <script>
+		var collectchat = collectchat || {}; 
+		collectchat.ready = function() {
+		  	collectchat.on('complete', function(list) {
+				console.log('User just completed the conversation', list);
+				var image =  list[0].answer;
+				var entry = {url: image};
+				
+				console.log(entry);
+
+				fetch('/output', {
+					method: "POST",
+					credentials: "include",
+					body: JSON.stringify(entry),
+					cache: "no-cache",
+					headers: new Headers({
+						"content-type": "application/json"
+					})
+				})
+				.then(function (response){
+					response.json().then(function (data){
+						console.log(data);
+						var ans = data["output"];
+						alert(ans);
+					})
+				})
+
+	    });
+		}
+	</script>
+
+
+	<body>
+		
+		
+		<p></p>
+		{{ prediction_text }}
+
+	
+		
+	</body>
+</head>
